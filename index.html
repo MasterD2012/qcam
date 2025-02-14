@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera App</title>
+    <title>Q Cam</title>
+    <link rel="icon" type="image/x-icon" href="qcam_icon.ico">
     <style>
         body {
             display: flex;
@@ -38,18 +39,24 @@
     </style>
 </head>
 <body>
-    <h1>Camera App</h1>
+    <h1>Q Cam</h1>
     <video id="video" width="400" height="300" autoplay></video>
     <button id="capture">Capture</button>
     <canvas id="canvas" width="400" height="300" hidden></canvas>
     <a id="download" download="captured_image.png" style="display:none;"></a>
     <button id="save" style="display:none;">Save Image</button>
+    <button id="edit" style="display:none;">Edit Capture</button>
+    <button id="help">Help</button>
+    <button id="about">About</button>
     
     <script>
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
         const captureButton = document.getElementById('capture');
         const saveButton = document.getElementById('save');
+        const editButton = document.getElementById('edit');
+        const helpButton = document.getElementById('help');
+        const aboutButton = document.getElementById('about');
         const downloadLink = document.getElementById('download');
         const context = canvas.getContext('2d');
 
@@ -64,6 +71,7 @@
         captureButton.addEventListener('click', () => {
             canvas.hidden = false;
             saveButton.style.display = 'block';
+            editButton.style.display = 'block';
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
         });
 
@@ -71,6 +79,18 @@
             const imageURL = canvas.toDataURL('image/png');
             downloadLink.href = imageURL;
             downloadLink.click();
+        });
+
+        editButton.addEventListener('click', () => {
+            alert('Editing feature coming soon!');
+        });
+
+        helpButton.addEventListener('click', () => {
+            alert('Q Cam Help: Click Capture to take a photo, then Save Image to download it.');
+        });
+
+        aboutButton.addEventListener('click', () => {
+            alert('Q Cam - A simple camera application for capturing images.');
         });
     </script>
 </body>
