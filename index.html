@@ -11,11 +11,29 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #f4f4f4;
+            background-color: #222;
+            color: white;
+            font-family: Arial, sans-serif;
         }
         video, canvas {
-            border: 2px solid black;
+            border: 4px solid white;
+            border-radius: 10px;
             margin: 10px;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.5);
+        }
+        button {
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #e64a19;
         }
     </style>
 </head>
@@ -23,11 +41,16 @@
     <h1>Camera App</h1>
     <video id="video" width="400" height="300" autoplay></video>
     <button id="capture">Capture</button>
-    <canvas id="canvas" width="400" height="300"></canvas>
+    <canvas id="canvas" width="400" height="300" hidden></canvas>
+    <a id="download" download="captured_image.png" style="display:none;"></a>
+    <button id="save" style="display:none;">Save Image</button>
+    
     <script>
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
         const captureButton = document.getElementById('capture');
+        const saveButton = document.getElementById('save');
+        const downloadLink = document.getElementById('download');
         const context = canvas.getContext('2d');
 
         navigator.mediaDevices.getUserMedia({ video: true })
@@ -39,7 +62,15 @@
             });
 
         captureButton.addEventListener('click', () => {
+            canvas.hidden = false;
+            saveButton.style.display = 'block';
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        });
+
+        saveButton.addEventListener('click', () => {
+            const imageURL = canvas.toDataURL('image/png');
+            downloadLink.href = imageURL;
+            downloadLink.click();
         });
     </script>
 </body>
